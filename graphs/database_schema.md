@@ -1,4 +1,4 @@
-# Database Schema
+# Database Schema Diagram
 
 ```mermaid
 erDiagram
