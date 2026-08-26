@@ -1,7 +1,6 @@
 # Database Schema
 
-The system uses PostgreSQL and is managed with Alembic migrations. The current schema contains seven tables.
-
+T
 ```mermaid
 erDiagram
     USERS ||--o| DOCTORS : "has profile"
@@ -100,26 +99,3 @@ erDiagram
     }
 ```
 
-## Relationship Notes
-
-- Each doctor has one linked user account. Doctor deletion soft-deletes and deactivates that user account.
-- Patients and doctors are soft-deleted with `is_deleted`; historical rows remain in the database.
-- Appointments reference one patient and one doctor. Active doctor/date/time combinations cannot be double-booked.
-- Prescriptions reference an appointment, patient, and doctor.
-- Medical records belong to a patient and record the uploading user.
-- Audit logs currently record appointment `CREATE`, `UPDATE`, and `DELETE` actions.
-- Appointment reminder flags prevent repeated one-hour and fifteen-minute notification emails.
-
-## Migration History
-
-| Revision | Change |
-| --- | --- |
-| `001_initial_schema` | Initial tables |
-| `002_complete_schema` | Completed clinic schema |
-| `003_patient_email_required` | Required patient email |
-| `004_status_as_string` | Stored appointment status as text |
-| `005_role_as_string` | Stored user role as text |
-| `006_structured_doctor_availability` | Added structured weekday availability |
-| `007_unique_doctor_phone_number` | Unique doctor phone number |
-| `008_reusable_closed_appointment_slots` | Reused slots from closed appointments |
-| `009_track_appointment_reminders` | Stored reminder delivery flags |
