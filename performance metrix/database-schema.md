@@ -1,6 +1,4 @@
-# Database Schema
 
-The system uses PostgreSQL with SQLAlchemy ORM and Alembic migrations.
 
 ```mermaid
 erDiagram
@@ -120,35 +118,7 @@ erDiagram
     }
 ```
 
-## Relationships
 
-- One `USER` may own one `CUSTOMER` profile. The customer `user_id` is unique.
-- One `CUSTOMER` can create many `TICKETS`.
-- A `TICKET` may be assigned to one support-agent `USER`; inactive agents cannot receive assignments.
-- One `CATEGORY` can classify many tickets.
-- One ticket can contain many comments and attachments.
-- Comments and attachments record the user who created or uploaded them.
-- Notifications belong to a user and may reference a ticket.
-- Audit logs record the actor, action, entity type, entity ID, previous value, new value, and description.
-- `slas` is a priority-keyed policy table. Tickets store deadline snapshots, so later policy changes do not rewrite existing ticket deadlines.
-
-## Constraints and indexes
-
-- `users.email` is unique and indexed.
-- `customers.user_id` is unique.
-- `categories.name` is unique and indexed.
-- `tickets.ticket_number` is unique and indexed.
-- `attachments.file_path` is unique.
-- SLA policy priority is unique.
-- Common ticket indexes cover status/priority, assigned-agent/status, and customer/created-at queries.
-- Customer status, company, user role/active state, and notification user ID are indexed.
-- Audit logs are indexed by user, entity type, and entity ID.
-
-## Delete behavior
-
-- Deleting a user cascades to the customer profile, comments, attachments, and notifications where configured.
-- Ticket-to-customer and ticket-to-category references use `RESTRICT` to preserve support history and prevent deleting referenced records.
-- Assigned-agent deletion uses `SET NULL`, preserving the ticket as unassigned.
 - Comments and attachments cascade from their ticket.
 - Notification ticket references use `SET NULL` so notifications can remain after ticket removal.
 - Customer deletion through the API is implemented as deactivation, preserving the customer and ticket history.
