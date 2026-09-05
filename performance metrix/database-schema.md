@@ -119,7 +119,4 @@ erDiagram
 ```
 
 
-- Comments and attachments cascade from their ticket.
-- Notification ticket references use `SET NULL` so notifications can remain after ticket removal.
-- Customer deletion through the API is implemented as deactivation, preserving the customer and ticket history.
-- Ticket cancellation changes status to `cancelled`; it does not remove the ticket.
+- 
