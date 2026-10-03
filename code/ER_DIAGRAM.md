@@ -148,11 +148,4 @@ erDiagram
     }
 ```
 
-## Relationship notes
 
-- `organization_members.role` is an organization-scoped role stored on the membership; it is not a foreign key to `roles`.
-- `project_members` records project membership and activation state; it does not store a separate project role.
-- `tasks.assignee_id` is nullable; each task has a required reporter and belongs to one project.
-- `task_dependencies` links one task to a prerequisite task. The `(task_id, depends_on_task_id)` pair is unique, and circular dependencies are rejected by application logic.
-- A comment or attachment can reference a project or a task. The corresponding foreign-key columns are nullable in the database.
-- `audit_logs.user_id` and `audit_logs.organization_id` are nullable so audit history can remain if related records are removed.
